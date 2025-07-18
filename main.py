@@ -61,6 +61,9 @@ class ProgressBar:
     def update(self, n=1):
         """Advance the progress by n units."""
         self.current += n
+        if self.total is not None:
+            self.current = min(self.current, self.total)
+
         current_time = time.time()
         # Refresh every 0.1s or upon completion
         if current_time - self.last_update >= 0.1 or (self.total and self.current >= self.total):
